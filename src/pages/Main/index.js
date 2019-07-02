@@ -49,10 +49,8 @@ const Main = () => (
       style={styles.logo}
       resizeMode="contain"
     />
-    <Text style={styles.welcome}>Bem-vindo ao Template Básico!</Text>
+    <Text style={styles.welcome}>Bem-vindo ao Botequeiros!</Text>
     <Text style={styles.instructions}>Essa é a tela principal da sua aplicação =)</Text>
-    <Text style={styles.instructions}>Você pode editar a tela no arquivo:</Text>
-    <Text style={[styles.instructions, styles.fileName]}>src/pages/Main/index.js</Text>
   </ImageBackground>
 );
 
