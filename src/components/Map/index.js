@@ -9,6 +9,7 @@ import Geocoder from 'react-native-geocoding';
 
 export default class Map extends React.Component {
   state = {
+    marginBottom: 1,
     region: {
       latitude: -19.9640335,
       longitude: -43.993464,
@@ -43,11 +44,12 @@ export default class Map extends React.Component {
   }
 
   render() {
-    const { region } = this.state;
+    const { region, marginBottom } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <MapView
-          style={{ flex: 1 }}
+          onMapReady={() => this.setState({ marginBottom: 0 })}
+          style={{ flex: 1, marginBottom }}
           region={region}
           showsMyLocationButton
           showsUserLocation
