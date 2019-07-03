@@ -43,12 +43,19 @@ export default class Map extends React.Component {
     );
   }
 
+
   render() {
     const { region, marginBottom } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <MapView
-          onMapReady={() => this.setState({ marginBottom: 0 })}
+          onMapReady={() => {
+            PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            ).then(() => {
+              this.setState({ marginBottom: 0 });
+            });
+          }}
           style={{ flex: 1, marginBottom }}
           region={region}
           showsMyLocationButton
