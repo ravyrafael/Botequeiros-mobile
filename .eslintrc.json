@@ -20,6 +20,7 @@
   "plugins": ["react", "react-native", "jsx-a11y", "import"],
   "rules": {
     "linebreak-style": 0,
+    "inline-styles": 0,
     "react/jsx-filename-extension": [
       "error",
       { "extensions": [".js", ".jsx"] }

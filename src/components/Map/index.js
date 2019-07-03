@@ -1,5 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-native/split-platform-components */
+/* eslint-disable react-native/no-inline-styles */
+
 import React from 'react';
 import MapView from 'react-native-maps';
 import { PermissionsAndroid, View } from 'react-native';
