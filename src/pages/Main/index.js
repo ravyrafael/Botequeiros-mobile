@@ -1,57 +1,28 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
+import MapView from 'react-native-maps';
+import { PermissionsAndroid, View } from 'react-native';
 
-import {
-  Text, Image, StyleSheet, Dimensions, ImageBackground, StatusBar,
-} from 'react-native';
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  fileName: {
-    fontWeight: 'bold',
-    marginTop: 5,
-  },
-  instructions: {
-    color: '#DDD',
-    fontSize: 14,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  logo: {
-    height: Dimensions.get('window').height * 0.11,
-    marginVertical: Dimensions.get('window').height * 0.11,
-    width: Dimensions.get('window').height * 0.11 * (1950 / 662),
-  },
-  welcome: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
 
 const Main = () => (
-  <ImageBackground
-    source={{
-      uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/background.png',
-    }}
-    style={styles.container}
-    resizeMode="cover"
-  >
-    <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
-    <Image
-      source={{
-        uri: 'https://s3-sa-east-1.amazonaws.com/rocketseat-cdn/rocketseat_logo.png',
+  <View style={{ flex: 1 }}>
+    <MapView
+      onMapReady={() => {
+        PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
       }}
-      style={styles.logo}
-      resizeMode="contain"
+      style={{ flex: 1 }}
+      region={{
+        latitude: -19.9640335,
+        longitude: -43.993464,
+        latitudeDelta: 0.0143,
+        longitudeDelta: 0.0134,
+      }}
+      showsUserLocation
+      showsMyLocationButton
     />
-    <Text style={styles.welcome}>Bem-vindo ao Botequeiros!</Text>
-    <Text style={styles.instructions}>Essa é a tela principal da sua aplicação =)</Text>
-  </ImageBackground>
+  </View>
 );
 
 export default Main;
