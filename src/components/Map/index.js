@@ -95,7 +95,7 @@ export default class Map extends React.Component {
               key={place.key}
               coordinate={place.location}
               title={place.name}
-              description={`${place.distance.toFixed(3)}`}       
+              description={`distancia: ${place.distance.toFixed(3)}`}       
             >
               <Image
                 source={BarIcon}
