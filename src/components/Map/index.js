@@ -19,6 +19,11 @@ export default class Map extends React.Component {
       latitudeDelta: 0.0143,
       longitudeDelta: 0.0134,
     },
+    deltaDefault:{
+      latitudeDelta: 0.0143,
+      longitudeDelta: 0.0134,
+    }
+    ,
     places:[]
 
   };
