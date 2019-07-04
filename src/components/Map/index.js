@@ -9,7 +9,7 @@ import places from '../../mock/places';
 import { ScrollView } from 'react-native-gesture-handler';
 // import Geocoder from 'react-native-geocoding';
 // import { Container } from './styles';
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const BarIcon = require('./beer.png')
 
@@ -34,7 +34,9 @@ export default class Map extends React.Component {
   };
 
 
-
+  onRegionChange(region) {
+    this.setState({ region });
+  }
   calculateDistance(lat1, lon1, lat2, lon2, unit) {
     var radlat1 = Math.PI * lat1 / 180
     var radlat2 = Math.PI * lat2 / 180
@@ -101,7 +103,8 @@ export default class Map extends React.Component {
     return (
       <View style={styles.map}>
         <MapView
-          ref={map=> this.mapView = map}
+          onRegionChange={this.onRegionChange}
+          ref={map => this.mapView = map}
           customMapStyle={customMap}
           onMapReady={() => {
             PermissionsAndroid.request(
@@ -118,7 +121,7 @@ export default class Map extends React.Component {
         >
           {this.state.places.map((place, i) => (
             <Marker
-              onPress={()=>{console.log(i);this.placeScroll.scrollTo({x: i*width, animated:true}); }}
+              onPress={() => { console.log(i); this.placeScroll.scrollTo({ x: i * width, animated: true }); }}
               ref={mark => place.mark = mark}
               key={place.key}
               coordinate={place.location}
@@ -133,26 +136,26 @@ export default class Map extends React.Component {
           ))}
         </MapView>
         <ScrollView
-          ref={placeScroll=> this.placeScroll = placeScroll}
+          ref={placeScroll => this.placeScroll = placeScroll}
           style={styles.placeContainer}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
-          onMomentumScrollEnd={e=> {
+          onMomentumScrollEnd={e => {
             const scrolled = e.nativeEvent.contentOffset.x;
-            const place =  (scrolled > 0) ? Math.round(scrolled/ Dimensions.get('window').width) :0;
-             const {latitude, longitude} = this.state.places[place].location;
-             const mark = this.state.places[place].mark;
-             const {latitudeDelta, longitudeDelta} = this.state.locationDefault
-              this.mapView.animateToRegion({
-                latitude,
-                longitude,
-                latitudeDelta,
-                longitudeDelta
-              }, 500)
-              setTimeout(()=> mark.showCallout(),
-                500
-              )
+            const place = (scrolled > 0) ? Math.round(scrolled / Dimensions.get('window').width) : 0;
+            const { latitude, longitude } = this.state.places[place].location;
+            const mark = this.state.places[place].mark;
+            const { latitudeDelta, longitudeDelta } = this.state.locationDefault
+            this.mapView.animateToRegion({
+              latitude,
+              longitude,
+              latitudeDelta,
+              longitudeDelta
+            }, 500)
+            setTimeout(() => mark.showCallout(),
+              500
+            )
           }}
         >
           {this.state.places.map(place => (
