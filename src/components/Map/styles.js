@@ -1,11 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet , Dimensions} from 'react-native';
+
+const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
     flex: 1,
+    justifyContent:'flex-end',
+    alignContent:'flex-end',
 
   },
+  placeContainer:{
+    width:'100%',
+    maxHeight:200
+
+  },
+  placeView:{
+    width: width - 40,
+    maxHeight: 200,
+    backgroundColor: '#FFF',
+    marginHorizontal: 20
+  }
 });
 export const customMap = [
   {

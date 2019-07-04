@@ -3,9 +3,10 @@
 
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { PermissionsAndroid, View, Image } from 'react-native';
+import { PermissionsAndroid, View, Image, Dimensions } from 'react-native';
 import styles, { customMap } from './styles';
 import places from '../../mock/places';
+import { ScrollView } from 'react-native-gesture-handler';
 // import Geocoder from 'react-native-geocoding';
 // import { Container } from './styles';
 const BarIcon = require('./beer.png')
@@ -29,6 +30,9 @@ export default class Map extends React.Component {
     places: []
 
   };
+
+
+
   calculateDistance(lat1, lon1, lat2, lon2, unit) {
     var radlat1 = Math.PI * lat1 / 180
     var radlat2 = Math.PI * lat2 / 180
@@ -86,10 +90,11 @@ export default class Map extends React.Component {
     );
   }
   async componentDidMount() {
-      await this.updateLocation()
+    await this.updateLocation()
   }
 
   render() {
+
     const { region, marginBottom } = this.state;
     return (
       <View style={styles.map}>
@@ -123,6 +128,19 @@ export default class Map extends React.Component {
             </Marker>
           ))}
         </MapView>
+        <ScrollView
+          style={styles.placeContainer}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+        >
+          {this.state.places.map(place => (
+            <View key={place.key}style={styles.placeView}>
+              
+            </View>
+          ))}
+
+        </ScrollView>
       </View>
     );
   }
