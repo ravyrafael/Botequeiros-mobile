@@ -70,12 +70,12 @@ export default class Map extends React.Component {
 
   }
 
-
   render() {
     const { region, marginBottom } = this.state;
     return (
       <View style={styles.map}>
         <MapView
+        onRegionChangeComplete={x=>console.log(x)}
           onMapReady={() => {
             PermissionsAndroid.request(
               PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
