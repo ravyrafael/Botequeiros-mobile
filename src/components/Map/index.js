@@ -4,7 +4,7 @@
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { PermissionsAndroid, View, Image } from 'react-native';
-import styles from './styles';
+import styles , {customMap }from './styles';
  import places from '../../mock/places';
 // import Geocoder from 'react-native-geocoding';
 // import { Container } from './styles';
@@ -75,6 +75,7 @@ export default class Map extends React.Component {
     return (
       <View style={styles.map}>
         <MapView
+        customMapStyle={customMap}
         onRegionChangeComplete={x=>console.log(x)}
           onMapReady={() => {
             PermissionsAndroid.request(
