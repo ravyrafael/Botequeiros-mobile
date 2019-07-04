@@ -3,12 +3,14 @@
 
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { PermissionsAndroid, View, Image, Dimensions } from 'react-native';
+import { PermissionsAndroid, View, Image, Text, Dimensions } from 'react-native';
 import styles, { customMap } from './styles';
 import places from '../../mock/places';
 import { ScrollView } from 'react-native-gesture-handler';
 // import Geocoder from 'react-native-geocoding';
 // import { Container } from './styles';
+const {height, width} = Dimensions.get('window');
+
 const BarIcon = require('./beer.png')
 
 export default class Map extends React.Component {
@@ -99,6 +101,7 @@ export default class Map extends React.Component {
     return (
       <View style={styles.map}>
         <MapView
+          ref={map=> this.mapView = map}
           customMapStyle={customMap}
           onMapReady={() => {
             PermissionsAndroid.request(
@@ -112,10 +115,11 @@ export default class Map extends React.Component {
           showsMyLocationButton
           showsUserLocation
           loadingEnabled
-
         >
-          {this.state.places.map(place => (
+          {this.state.places.map((place, i) => (
             <Marker
+              onPress={()=>{console.log(i);this.placeScroll.scrollTo({x: i*width, animated:true}); }}
+              ref={mark => place.mark = mark}
               key={place.key}
               coordinate={place.location}
               title={place.name}
@@ -129,14 +133,34 @@ export default class Map extends React.Component {
           ))}
         </MapView>
         <ScrollView
+          ref={placeScroll=> this.placeScroll = placeScroll}
           style={styles.placeContainer}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
+          onMomentumScrollEnd={e=> {
+            const scrolled = e.nativeEvent.contentOffset.x;
+            const place =  (scrolled > 0) ? Math.round(scrolled/ Dimensions.get('window').width) :0;
+             const {latitude, longitude} = this.state.places[place].location;
+             const mark = this.state.places[place].mark;
+             const {latitudeDelta, longitudeDelta} = this.state.locationDefault
+              this.mapView.animateToRegion({
+                latitude,
+                longitude,
+                latitudeDelta,
+                longitudeDelta
+              }, 500)
+              setTimeout(()=> mark.showCallout(),
+                500
+              )
+          }}
         >
           {this.state.places.map(place => (
-            <View key={place.key}style={styles.placeView}>
-              
+            <View key={place.key} style={styles.placeView}>
+              <Text>{`ID: ${place.key}`}</Text>
+              <Text>{`Nome: ${place.name}`}</Text>
+              <Text numberOfLines={2}>{`Descrição: ${place.description}`}</Text>
+              <Text>{`Distancia: ${place.distance}`}</Text>
             </View>
           ))}
 

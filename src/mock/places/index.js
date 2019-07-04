@@ -103,8 +103,8 @@
   description: 'Bar com rodizio de pizzas, cerveja gelada e torres de chopp',
   rating: [],
   location: {
-    latitude: -19.8805239,
-    longitude: -43.9508246
+    latitude: -19.8426496,
+    longitude: -43.9437041
   },
   beer: 5.50,
 },
@@ -114,8 +114,8 @@
   description: 'Bar com rodizio de pizzas, cerveja gelada e torres de chopp',
   rating: [],
   location: {
-    latitude: -19.8805239,
-    longitude: -43.950824
+    latitude: -19.8580097,
+    longitude: -43.9391385
   },
   beer: 5.50,
 },
@@ -125,8 +125,8 @@
   description: 'Bar com rodizio de pizzas, cerveja gelada e torres de chopp',
   rating: [],
   location: {
-    latitude: -19.8805236,
-    longitude: -43.9508266,
+    latitude: -19.8744087,
+    longitude: -43.9598718
   },
   beer: 5.50,
 },
@@ -136,8 +136,8 @@
   description: 'Bar com rodizio de pizzas, cerveja gelada e torres de chopp',
   rating: [],
   location: {
-    latitude: -19.8927261,
-    longitude: -43.9491317
+    latitude: -19.8848443,
+    longitude: -43.956082
   },
   beer: 5.50,
 },
@@ -532,8 +532,8 @@
   description: 'Bar com rodizio de pizzas, cerveja gelada e torres de chopp',
   rating: [],
   location: {
-    latitude: -19.8805239,
-    longitude: -43.9508246
+    latitude: -19.8644993,
+    longitude: -43.9392003
   },
   beer: 5.50,
 },
@@ -554,8 +554,8 @@
   description: 'Bar com rodizio de pizzas, cerveja gelada e torres de chopp',
   rating: [],
   location: {
-    latitude: -19.8805239,
-    longitude: -43.9508246
+    latitude: -19.8652622,
+    longitude: -43.9573277
   },
   beer: 5.50,
 },
