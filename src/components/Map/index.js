@@ -3,11 +3,12 @@
 
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { PermissionsAndroid, View } from 'react-native';
+import { PermissionsAndroid, View, Image } from 'react-native';
 import styles from './styles';
-// import { places } from '../../mock/places';
+ import places from '../../mock/places';
 // import Geocoder from 'react-native-geocoding';
 // import { Container } from './styles';
+const BarIcon = require('./beer.png')
 
 export default class Map extends React.Component {
   state = {
@@ -18,31 +19,24 @@ export default class Map extends React.Component {
       latitudeDelta: 0.0143,
       longitudeDelta: 0.0134,
     },
-    places: [{
-      key: 1,
-      name: 'Restaurante 1',
-      description: 'Restaurante com rodizio de carnes e chop gelado',
-      rating: [],
-      location: {
-        latitude: -19.9664297,
-        longitude: -43.9957961,
-      },
-      beer: 5.50,
-    },
-    {
-      key: 2,
-      name: 'Restaurante 2',
-      description: 'Restaurante de comida japonesa com rodizio e chop.',
-      rating: [],
-      location: {
-        latitude: -19.9648468,
-        longitude: -43.9933418,
-      },
-      beer: 5.50,
-    },
-    ],
+    places:[]
 
   };
+  calculateDistance(lat1, lon1, lat2, lon2, unit) {
+    var radlat1 = Math.PI * lat1/180
+    var radlat2 = Math.PI * lat2/180
+    var radlon1 = Math.PI * lon1/180
+    var radlon2 = Math.PI * lon2/180
+    var theta = lon1-lon2
+    var radtheta = Math.PI * theta/180
+    var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    dist = Math.acos(dist)
+    dist = dist * 180/Math.PI
+    dist = dist * 60 * 1.1515
+    if (unit=="K") { dist = dist * 1.609344 }
+    if (unit=="N") { dist = dist * 0.8684 }
+    return dist
+  }
 
   async componentDidMount() {
     await navigator.geolocation.getCurrentPosition(
@@ -59,6 +53,12 @@ export default class Map extends React.Component {
             longitudeDelta: 0.0134,
           },
         });
+        this.setState({
+          places: places.map(place=>({
+            ...place, 
+            distance:this.calculateDistance(latitude, longitude,place.location.latitude, place.location.longitude, 'k')}))
+            .sort((a,b)=>(a.distance-b.distance))
+        });
       }, // sucesso
       () => { }, // erro
       {
@@ -67,11 +67,12 @@ export default class Map extends React.Component {
         maximumAge: 1000,
       },
     );
+
   }
 
 
   render() {
-    const { region, marginBottom, places } = this.state;
+    const { region, marginBottom } = this.state;
     return (
       <View style={styles.map}>
         <MapView
@@ -89,13 +90,18 @@ export default class Map extends React.Component {
           loadingEnabled
 
         >
-          {places.map(place => (
+          {this.state.places.map(place => (
             <Marker
               key={place.key}
               coordinate={place.location}
               title={place.name}
-              description={place.description}
+              description={`${place.distance.toFixed(3)}`}       
+            >
+              <Image
+                source={BarIcon}
+                style={{height: 40, width: 40}}
             />
+              </Marker>
           ))}
         </MapView>
       </View>
